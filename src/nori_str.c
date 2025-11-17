@@ -450,3 +450,5 @@ enum NRetCode nstr_assign_format(NString *str, const char *format, ...)
    bvformata(ret, str, format, format);
    return ret;
 }
+
+// Regex: see nori_str_regex.c

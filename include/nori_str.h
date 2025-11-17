@@ -91,8 +91,8 @@ int32_t nstr_in_str(const NString *str1, int32_t pos, const NString *str2);
 int32_t nstr_in_str_reverse(const NString *str1, int32_t pos, const NString *str2);
 int32_t nstr_in_str_caseless(const NString *str1, int32_t pos, const NString *str2);
 int32_t nstr_in_str_reverse_caseless(const NString *str1, int32_t pos, const NString *str2);
-int32_t nstr_find_char_from_pos(const NString *str, int32_t ch, int32_t pos);
-int32_t nstr_find_char_from_pos_reverse(const NString *str, int32_t ch, int32_t pos);
+int32_t nstr_find_char_from_pos(const NString *str, char c, int32_t pos);
+int32_t nstr_find_char_from_pos_reverse(const NString *str, char c, int32_t pos);
 #define nstr_find_char(str,ch) nstr_find_char_from_pos((str), (ch), 0)
 #define nstr_find_char_reverse(str,ch) nstr_find_char_from_pos_reverse((str), (ch), nstr_len(str)-1)
 int32_t nstr_first_of(const NString *str, int32_t pos, const NString *allowlist);
