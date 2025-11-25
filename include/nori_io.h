@@ -34,4 +34,6 @@ enum NRetCode nio_s_unread(NStream *s, const NString *str);
 enum NRetCode nio_s_peek(NString *onto, const NStream *s);
 enum NRetCode nio_s_eof(const NStream *s);
 
+void nio_debug(const char *format, ...);
+
 #endif

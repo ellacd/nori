@@ -9,4 +9,5 @@ enum NRetCode {
   NORI_NEQ = 0
 };
 
+#define ARRAY_LENGTH(x) (sizeof((x))/sizeof((x)[0]))
 #endif

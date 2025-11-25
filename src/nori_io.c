@@ -1,4 +1,5 @@
 #include "bstrlib.h"
+#include <stdio.h>
 
 #define NORI_IO_INTERNAL
 typedef struct bStream NStream;
@@ -79,4 +80,15 @@ enum NRetCode nio_s_peek(NString *onto, const NStream *s)
 enum NRetCode nio_s_eof(const NStream *s)
 {
   return bseof(s);
+}
+
+void nio_debug(const char *format, ...)
+{
+#ifndef NLOG
+  va_list va;
+  va_start(va, format);
+  vprintf(format, va);
+  va_end(va);
+#endif
+  return;
 }

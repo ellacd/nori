@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include <stdint.h>
 #include "nori_def.h"
 
@@ -43,12 +44,12 @@ enum NRetCode nstr_cstr_free(char *str)
 }
 
 // Constructors (N strings)
-NString *nstr_copy(const NString *str)
+NString *nstr_from_nstr(const NString *str)
 {
   return bstrcpy(str);
 }
 
-NString *nstr_mid(const NString *str, int32_t left, int32_t len)
+NString *nstr_from_mid(const NString *str, int32_t left, int32_t len)
 {
   return bmidstr(str, left, len);
 }
@@ -328,10 +329,10 @@ enum NRetCode nstr_list_append(NStringList *sl, NString *str)
 {
   if (sl == NULL || sl->entry == NULL || sl->qty < 0 || sl->mlen <= 0 ||
       sl->qty > sl ->mlen) {
-    return NULL;
+    return NORI_ERR;
   } else if (str == NULL || str->data == NULL || str->slen < 0 ||
              str->mlen <= 0 || str->slen > str->mlen ) {
-    return NULL;
+    return NORI_ERR;
   }
 
   nstr_list_alloc(sl, sl->qty + 1);
@@ -451,4 +452,38 @@ enum NRetCode nstr_assign_format(NString *str, const char *format, ...)
    return ret;
 }
 
-// Regex: see nori_str_regex.c
+enum NRetCode nstr_vaformat(NString *str, uint32_t count, const char *format, va_list va)
+{
+  uint32_t ret = bvcformata(str, count, format, va);
+  if (ret == BSTR_ERR) return NORI_ERR;
+  else return NORI_OK;
+}
+
+uint32_t nstr_to_uint(const NString *str)
+{
+  if (str == NULL || str->data == NULL || str->slen < 0 ||
+             str->mlen <= 0 || str->slen > str->mlen ) {
+    return -1;
+  } else {
+    uint32_t sum = 0;
+    uint32_t place_value = 1;
+    uint32_t base = 10;
+    uint32_t i = nstr_len(str) - 1;
+
+    if (nstr_is_stem_eq_static(str, "0x")) {
+      base = 16;
+    } else if (nstr_is_stem_eq_static(str, "0b")) {
+      base = 2;
+    } else if (nstr_is_stem_eq_static(str, "0")) {
+      base = 8;
+    }
+
+    while (i >= 0) {
+      sum += nstr_char_at(str, i) * place_value;
+      i--;
+      place_value *= base;
+    }
+
+    return sum;
+  }
+}
