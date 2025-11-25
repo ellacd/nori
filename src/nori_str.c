@@ -6,12 +6,11 @@
 // bstrlib is by Paul Hsieh, (c) 2015; see LICENSE.
 #include "bstrlib.h"
 
-typedef struct tagbstring NString;
+typedef struct NString NString;
 typedef struct bstrList NStringList;
 
 #define NORI_STR_INTERNAL
 #include "nori_str.h"
-
 
 NString *nstr_from_cstr(const char *str)
 {
@@ -38,9 +37,9 @@ char *nstr_to_cstr(const NString *str, char z)
   return bstr2cstr((bstring) str, z);
 }
 
-enum NRetCode nstr_cstr_free(char *str)
+void  nstr_cstr_free(char *str)
 {
-  return (enum NRetCode) bcstrfree(str);
+  bcstrfree(str);
 }
 
 // Constructors (N strings)
@@ -54,100 +53,100 @@ NString *nstr_from_mid(const NString *str, int32_t left, int32_t len)
   return bmidstr(str, left, len);
 }
 
-enum NRetCode nstr_assign(NString *str1, const NString *str2)
+void nstr_assign(NString *str1, const NString *str2)
 {
-  return bassign(str1, str2);
+  bassign(str1, str2);
 }
 
-enum NRetCode nstr_assign_mid(NString *str1, const NString *str2, uint32_t left, uint32_t len)
+void nstr_assign_mid(NString *str1, const NString *str2, uint32_t left, uint32_t len)
 {
-  return bassignmidstr(str1, str2, left, len);
+  bassignmidstr(str1, str2, left, len);
 }
 
-enum NRetCode nstr_assign_cstr(NString *str, const char *cstr)
+void nstr_assign_cstr(NString *str, const char *cstr)
 {
-  return bassigncstr(str, cstr);
+  bassigncstr(str, cstr);
 }
 
-enum NRetCode nstr_assign_block(NString *str, const void *block, int32_t len)
+nstr_assign_block(NString *str, const void *block, int32_t len)
 {
-  return bassignblk(str, block, len);
+  bassignblk(str, block, len);
 }
 
 // Constructors (Static string literals)
 // TODO: this
 
 // Destructor
-enum NRetCode nstr_destroy(NString *str)
+void nstr_destroy(NString *str)
 {
-  return bdestroy(str);
+  bdestroy(str);
 }
 
 // Allocation mutators
-enum NRetCode nstr_alloc(NString *str, int32_t len)
+void nstr_alloc(NString *str, int32_t len)
 {
-  return balloc(str, len);
+  balloc(str, len);
 }
 
-enum NRetCode nstr_alloc_min(NString *str, int32_t len)
+void nstr_alloc_min(NString *str, int32_t len)
 {
-  return ballocmin(str, len);
+  ballocmin(str, len);
 }
 
 // Manipulation
-enum NRetCode nstr_concat(NString *str1, const NString *str2)
+void nstr_concat(NString *str1, const NString *str2)
 {
-  return bconcat(str1, str2);
+  bconcat(str1, str2);
 }
 
-enum NRetCode nstr_concat_char(NString *str, char c)
+void nstr_concat_char(NString *str, char c)
 {
-  return bconchar(str, c);
+  bconchar(str, c);
 }
 
-enum NRetCode nstr_concat_cstr(NString *str, const char *cstr)
+void nstr_concat_cstr(NString *str, const char *cstr)
 {
-  return bcatcstr(str, cstr);
+  bcatcstr(str, cstr);
 }
 
-enum NRetCode nstr_concat_block(NString *str, const void *block, int32_t len)
+void nstr_concat_block(NString *str, const void *block, int32_t len)
 {
-  return bcatblk(str, block, len);
+  bcatblk(str, block, len);
 }
 
-enum NRetCode nstr_insert(NString *str1, int32_t pos, const NString *str2, unsigned char fill)
+void nstr_insert(NString *str1, int32_t pos, const NString *str2, unsigned char fill)
 {
-  return binsert(str1, pos, str2, fill);
+  binsert(str1, pos, str2, fill);
 }
 
-enum NRetCode nstr_insert_block(NString *str, int32_t pos, const void *block, int32_t len, unsigned char fill)
+void nstr_insert_block(NString *str, int32_t pos, const void *block, int32_t len, unsigned char fill)
 {
-  return binsertblk(str, pos, block, len, fill);
+  binsertblk(str, pos, block, len, fill);
 }
 
-enum NRetCode nstr_insert_char(NString *str, int32_t pos, int32_t len, unsigned char fill)
+void nstr_insert_char(NString *str, int32_t pos, int32_t len, unsigned char fill)
 {
-  return binsertch(str, pos, len, fill);
+  binsertch(str, pos, len, fill);
 }
 
-enum NRetCode nstr_replace(NString *str1, int32_t pos, int32_t len, const NString *str2, unsigned char fill)
+void nstr_replace(NString *str1, int32_t pos, int32_t len, const NString *str2, unsigned char fill)
 {
-  return breplace(str1, pos, len, str2, fill);
+  breplace(str1, pos, len, str2, fill);
 }
 
-enum NRetCode nstr_delete(NString *str, int32_t pos, int32_t len)
+void nstr_delete(NString *str, int32_t pos, int32_t len)
 {
-  return bdelete(str, pos, len);
+  bdelete(str, pos, len);
 }
 
-enum NRetCode nstr_set_str(NString *str1, int32_t pos, const NString *str2, unsigned char fill)
+void nstr_set_str(NString *str1, int32_t pos, const NString *str2, unsigned char fill)
 {
-  return bsetstr(str1, pos, str2, fill);
+  bsetstr(str1, pos, str2, fill);
 }
 
-enum NRetCode nstr_truncate(NString *str, int32_t n)
+void nstr_truncate(NString *str, int32_t n)
 {
-  return btrunc(str, n);
+  btrunc(str, n);
 }
 
 // string.h drop-in replacements
@@ -193,44 +192,44 @@ char *nstr_data_offset(NString *str, int32_t offset)
 }
 
 // String equality checks. Use instead of strcmp where possible
-enum NRetCode nstr_is_eq(const NString *str1, const NString *str2)
+void nstr_is_eq(const NString *str1, const NString *str2)
 {
-  return biseq(str1, str2);
+  biseq(str1, str2);
 }
 
-enum NRetCode nstr_is_eq_caseless(const NString *str1, const NString *str2)
+void nstr_is_eq_caseless(const NString *str1, const NString *str2)
 {
-  return biseqcaseless(str1, str2);
+  biseqcaseless(str1, str2);
 }
 
-enum NRetCode nstr_is_eq_cstr(const NString *str, const char *cstr)
+void nstr_is_eq_cstr(const NString *str, const char *cstr)
 {
-  return biseqcstr(str, cstr);
+  biseqcstr(str, cstr);
 }
 
-enum NRetCode nstr_is_eq_cstr_caseless(const NString *str, const char *cstr)
+void nstr_is_eq_cstr_caseless(const NString *str, const char *cstr)
 {
-  return biseqcstrcaseless(str, cstr);
+  biseqcstrcaseless(str, cstr);
 }
 
-enum NRetCode nstr_is_eq_block(const NString *str, const void *block, int32_t len)
+void nstr_is_eq_block(const NString *str, const void *block, int32_t len)
 {
-  return biseqblk(str, block, len);
+  biseqblk(str, block, len);
 }
 
-enum NRetCode nstr_is_eq_block_caseless(const NString *str, const void *block, int32_t len)
+void nstr_is_eq_block_caseless(const NString *str, const void *block, int32_t len)
 {
-  return biseqcaselessblk(str, block, len);
+  biseqcaselessblk(str, block, len);
 }
 
-enum NRetCode nstr_is_stem_eq_block(const NString *str, const void *block, int32_t len)
+void nstr_is_stem_eq_block(const NString *str, const void *block, int32_t len)
 {
-  return bisstemeqblk(str, block, len);
+  bisstemeqblk(str, block, len);
 }
 
-enum NRetCode nstr_is_stem_eq_block_caseless(const NString *str, const void *block, int32_t len)
+void nstr_is_stem_eq_block_caseless(const NString *str, const void *block, int32_t len)
 {
-  return bisstemeqcaselessblk(str, block, len);
+  bisstemeqcaselessblk(str, block, len);
 }
 
 // Substring queries
@@ -300,17 +299,17 @@ NStringList *nstr_list_create(void)
   return bstrListCreate();
 }
 
-enum NRetCode nstr_list_destroy(NStringList *sl)
+void nstr_list_destroy(NStringList *sl)
 {
   return bstrListDestroy(sl);
 }
 
-enum NRetCode nstr_list_alloc(NStringList *sl, int min_size)
+void nstr_list_alloc(NStringList *sl, int min_size)
 {
   return bstrListAlloc(sl, min_size);
 }
 
-enum NRetCode nstr_list_alloc_qty(NStringList *sl, int min_qty)
+void nstr_list_alloc_qty(NStringList *sl, int min_qty)
 {
   return bstrListAllocMin(sl, min_qty);
 }
@@ -325,23 +324,20 @@ NString *nstr_list_at(const NStringList *sl, int32_t index)
   return sl->entry[index];
 }
 
-enum NRetCode nstr_list_append(NStringList *sl, NString *str)
+void nstr_list_append(NStringList *sl, NString *str)
 {
   if (sl == NULL || sl->entry == NULL || sl->qty < 0 || sl->mlen <= 0 ||
       sl->qty > sl ->mlen) {
-    return NORI_ERR;
+    return;
   } else if (str == NULL || str->data == NULL || str->slen < 0 ||
              str->mlen <= 0 || str->slen > str->mlen ) {
-    return NORI_ERR;
+    return;
   }
 
   nstr_list_alloc(sl, sl->qty + 1);
   if (sl) {
     sl->entry[sl->qty] = str;
     sl->qty++;
-    return NORI_OK;
-  } else {
-    return NORI_ERR;
   }
 }
 
@@ -371,62 +367,62 @@ NString *nstr_join_block(const NStringList *sl, const void *block, int32_t len)
   return bjoinblk(sl, block, len);
 }
 
-enum NRetCode nstr_split_callback(const NString *str, unsigned char split, int32_t pos,
+void nstr_split_callback(const NString *str, unsigned char split, int32_t pos,
                                   int32_t (*func_callback)(void *param, int32_t offset, int32_t len),
                                   void *param)
 {
-  return bsplitcb(str, split, pos, func_callback, param);
+  bsplitcb(str, split, pos, func_callback, param);
 }
 
-enum NRetCode nstr_splits_callback(const NString *str, const NString *splits, int32_t pos,
+void nstr_splits_callback(const NString *str, const NString *splits, int32_t pos,
                                    int32_t (*func_callback)(void *param, int32_t offset, int32_t len),
                                    void *param)
 {
-  return bsplitscb(str, splits, pos, func_callback, param);
+  bsplitscb(str, splits, pos, func_callback, param);
 }
 
-enum NRetCode nstr_split_string_callback(const NString *str, const NString *split, int32_t pos,
+void nstr_split_string_callback(const NString *str, const NString *split, int32_t pos,
                                    int32_t (*func_callback)(void *param, int32_t offset, int32_t len),
                                    void *param)
 {
-  return bsplitstrcb(str, split, pos, func_callback, param);
+  bsplitstrcb(str, split, pos, func_callback, param);
 }
 
 // Format
-enum NRetCode nstr_pattern(NString *str, int32_t len)
+void nstr_pattern(NString *str, int32_t len)
 {
-  return bpattern(str, len);
+  bpattern(str, len);
 }
 
-enum NRetCode nstr_to_upper(NString *str)
+void nstr_to_upper(NString *str)
 {
-  return btoupper(str);
+  btoupper(str);
 }
 
-enum NRetCode nstr_to_lower(NString *str)
+void nstr_to_lower(NString *str)
 {
-  return btolower(str);
+  btolower(str);
 }
 
-enum NRetCode nstr_trim_whitespace_left(NString *str)
+void nstr_trim_whitespace_left(NString *str)
 {
-  return bltrimws(str);
+  bltrimws(str);
 }
 
-enum NRetCode nstr_trim_whitespace_right(NString *str)
+void nstr_trim_whitespace_right(NString *str)
 {
-  return brtrimws(str);
+  brtrimws(str);
 }
 
-enum NRetCode nstr_trim_whitespace(NString *str)
+void nstr_trim_whitespace(NString *str)
 {
-  return brtrimws(str);
+  brtrimws(str);
 }
 
 // sprintf drop-in replacements
 NString *nstr_format(const char *format, ...)
 {
-  enum NRetCode ret;
+  void ret;
   NString *str = bfromcstr("");
   bvformata(ret, str, format, format);
   if (ret == NORI_OK) {
@@ -436,27 +432,21 @@ NString *nstr_format(const char *format, ...)
   }
 }
 
-enum NRetCode nstr_format_append(NString *str, const char *format, ...)
+void nstr_format_append(NString *str, const char *format, ...)
 {
-  enum NRetCode ret;
   bvformata(ret, str, format, format);
-  return ret;
 }
 
-enum NRetCode nstr_assign_format(NString *str, const char *format, ...)
+void nstr_assign_format(NString *str, const char *format, ...)
 {
-   enum NRetCode ret;
    nstr_destroy(str);
    str = nstr_from_cstr("");
    bvformata(ret, str, format, format);
-   return ret;
 }
 
-enum NRetCode nstr_vaformat(NString *str, uint32_t count, const char *format, va_list va)
+void nstr_vaformat(NString *str, uint32_t count, const char *format, va_list va)
 {
-  uint32_t ret = bvcformata(str, count, format, va);
-  if (ret == BSTR_ERR) return NORI_ERR;
-  else return NORI_OK;
+  bvcformata(str, count, format, va);
 }
 
 uint32_t nstr_to_uint(const NString *str)

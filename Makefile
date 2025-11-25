@@ -1,9 +1,11 @@
-EXE := NoriTest
+NAME := libnori.a
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wpedantic
+CFLAGS := -std=c89 -Wall -Wpedantic
 CPPFLAGS = -MMD -MP -I $(INCLUDE_DIR)
 LDFLAGS = -lm -lbstr -L $(LIBRARY_DIR)
+AR := ar
+ARFLAGS := -r -c -s 
 
 SANFLAGS := -fsanitize=address,undefined
 MAKEFLAGS := --no-print-directory
@@ -19,8 +21,8 @@ DEP = $(OBJ:%.o=%.d)
 
 all: debug
 
-$(EXE): $(OBJ)
-	$(CC) -o $@ $^ $(LDFLAGS)
+$(NAME): $(OBJ)
+	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
@@ -32,17 +34,18 @@ clean:
 	rm -f $(OBJ) $(DEP)
 
 fclean: clean
-	rm -f $(EXE)
+	rm -f $(NAME)
 
 debug: CFLAGS += -g3 $(SANFLAGS)
 debug: LDFLAGS += $(SANFLAGS)
-debug: $(EXE)
+debug: $(NAME)
 
-release: CFLAGS += -O3 -DNDEBUG
-release: fclean $(EXE)
+release: CFLAGS += -O2 -DNDEBUG
+release: fclean $(NAME)
 
-test: $(EXE)
-	gdb --tui $<
+re:
+	$(MAKE) fclean
+	$(MAKE) all
 
-.PHONY: clean fclean test
+.PHONY: clean fclean re
 .SILENT:
