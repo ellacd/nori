@@ -20,19 +20,19 @@ int32_t nio_s_set_buffer_len(NStream *s, int size);
 #define nio_s_get_buffer_len(x) nstr_s_set_buffer_len((x),0)
 
 NString *nio_gets(Xgetc func_getc, void *param, char terminator);
-enum NRetCode nio_gets_append(NString *str, Xgetc func_getc, void *param, char terminator);
-enum NRetCode nio_assign_gets(NString *str, Xgetc func_getc, void *param, char terminator);
+void nio_gets_append(NString *str, Xgetc func_getc, void *param, char terminator);
+void nio_assign_gets(NString *str, Xgetc func_getc, void *param, char terminator);
 
-enum NRetCode nio_s_read_line(NString *into, NStream *s, char terminator);
-enum NRetCode nio_s_read_line_append(NString *onto, NStream *s, char terminator);
-enum NRetCode nio_s_read_line_until(NString *into, NStream *s, NString *terminators);
-enum NRetCode nio_s_read_line_until_append(NString *onto, NStream *s, NString *terminators);
-enum NRetCode nio_s_read_n(NString *into, NStream *s, int32_t n);
-enum NRetCode nio_s_read_n_append(NString *onto, NStream *s, int32_t n);
-enum NRetCode nio_s_unread(NStream *s, const NString *str);
+void nio_s_read_line(NString *into, NStream *s, char terminator);
+void nio_s_read_line_append(NString *onto, NStream *s, char terminator);
+void nio_s_read_line_until(NString *into, NStream *s, NString *terminators);
+void nio_s_read_line_until_append(NString *onto, NStream *s, NString *terminators);
+void nio_s_read_n(NString *into, NStream *s, int32_t n);
+void nio_s_read_n_append(NString *onto, NStream *s, int32_t n);
+void nio_s_unread(NStream *s, const NString *str);
 
-enum NRetCode nio_s_peek(NString *onto, const NStream *s);
-enum NRetCode nio_s_eof(const NStream *s);
+void nio_s_peek(NString *onto, const NStream *s);
+void nio_s_eof(const NStream *s);
 
 void nio_debug(const char *format, ...);
 

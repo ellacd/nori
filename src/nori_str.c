@@ -1,6 +1,5 @@
 #include <stdarg.h>
 #include <stdint.h>
-#include "nori_def.h"
 
 // Currently, this is implemented in terms of bstrlib.
 // bstrlib is by Paul Hsieh, (c) 2015; see LICENSE.

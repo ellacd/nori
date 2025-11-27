@@ -8,14 +8,14 @@ typedef struct NList NList;
 #include "nori_ds.h"
 
 struct NList {
-  uint32_t qty;
-  uint32_t mlen;
-  uint16_t stride;
+  uint32 qty;
+  uint32 mlen;
+  uint16 stride;
   char typename[16];
   unsigned char *data;
 };
 
-NList *nlist_create(const char *typename, uint16_t stride)
+NList *nlist_create(const char *typename, uint16 stride)
 {
   NList *l = malloc(sizeof(*l));
   l->qty = 0;
@@ -27,7 +27,7 @@ NList *nlist_create(const char *typename, uint16_t stride)
   return l;
 }
 
-NList *nlist_create_and_alloc(const char *typename, uint16_t stride, uint32_t mlen)
+NList *nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen)
 {
   NList *l = malloc(sizeof(*l));
   l->qty = 0;
@@ -39,7 +39,7 @@ NList *nlist_create_and_alloc(const char *typename, uint16_t stride, uint32_t ml
   return l;
 }
 
-void nlist_alloc(NList *l, uint32_t mlen)
+void nlist_alloc(NList *l, uint32 mlen)
 {
   unsigned char *new_data;
   if (l->mlen >= mlen) return;
@@ -61,12 +61,12 @@ void nlist_destroy(NList *l)
   }
 }
 
-uint32_t nlist_len(const NList *l)
+uint32 nlist_len(const NList *l)
 {
   return l->qty;
 }
 
-void *nlist_at(const NList *l, uint32_t p)
+void *nlist_at(const NList *l, uint32 p)
 {
   if (p >= l->qty) return NULL;
   else return (l->data + p * l->stride);
@@ -78,17 +78,17 @@ void nlist_add(NList *l, const void *el)
   memcpy(&l->data[l->qty++ * l->stride], el, l->stride);
 }
 
-uint32_t nlist_find(const NList *l, const void *el,
-                    _Bool (*func_is_eq)(const void *e1, const void *e2))
+uint32 nlist_find(const NList *l, const void *el,
+                    boolean (*func_is_eq)(const void *e1, const void *e2))
 {
   return nlist_find_from(l, el, func_is_eq, 0);
 }
 
-uint32_t nlist_find_from(const NList *l, const void *el,
-                         _Bool (*func_is_eq)(const void *e1, const void *e2), uint32_t p)
+uint32 nlist_find_from(const NList *l, const void *el,
+                         boolean (*func_is_eq)(const void *e1, const void *e2), uint32 p)
 {
-  uint32_t i;
-  uint32_t len = nlist_len(l);
+  uint32 i;
+  uint32 len = nlist_len(l);
 
   for (i = p; i < len; i++) {
     const void *ei = nlist_at(l, i);
@@ -100,16 +100,16 @@ uint32_t nlist_find_from(const NList *l, const void *el,
   return -1;
 }
 
-uint32_t nlist_find_r(const NList *l, const void *el,
-                      _Bool (*func_is_eq)(const void *e1, const void *e2))
+uint32 nlist_find_r(const NList *l, const void *el,
+                      boolean (*func_is_eq)(const void *e1, const void *e2))
 {
   return nlist_find_r_from(l, el, func_is_eq, nlist_len(l) - 1);
 }
 
-uint32_t nlist_find_r_from(const NList *l, const void *el,
-                           _Bool (*func_is_eq)(const void *e1, const void *e2), uint32_t p)
+uint32 nlist_find_r_from(const NList *l, const void *el,
+                           boolean (*func_is_eq)(const void *e1, const void *e2), uint32 p)
 {
-  uint32_t i;
+  uint32 i;
 
   for (i = p; i >= 0; i--) {
     const void *ei = nlist_at(l, i);
@@ -121,7 +121,7 @@ uint32_t nlist_find_r_from(const NList *l, const void *el,
   return -1;
 }
 
-_Bool nlist_can_cast(const NList *to, const NList *from)
+boolean nlist_can_cast(const NList *to, const NList *from)
 {
   return strcmp(to->typename, from->typename) == 0;
 }
