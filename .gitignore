@@ -1,0 +1,8 @@
+*.[oda]
+.cache/
+.gdb_history
+NoriTest
+compile_commands.json
+src/main.c
+include/raylib.h
+include/bstrlib.h
