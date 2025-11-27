@@ -1,7 +1,7 @@
 NAME := libnori.a
 
 CC := gcc
-CFLAGS := -std=c89 -Wall -Wpedantic
+CFLAGS := -std=c99 -Wall -Wpedantic -Wc90-c99-compat
 CPPFLAGS = -MMD -MP -I $(INCLUDE_DIR)
 LDFLAGS = -lm -lbstr -L $(LIBRARY_DIR)
 AR := ar
