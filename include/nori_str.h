@@ -29,16 +29,16 @@ NString *nstr_from_nstr(const NString *str);
 #define nstr_mid(n,p,l) nstr_from_mid((n),(p),(l))
 NString *nstr_from_mid(const NString *str, int32_t left, int32_t len);
 void nstr_assign(NString *str1, const NString *str2);
-void  nstr_assign_mid(NString *str1, const NString *str2, uint32_t left, uint32_t len);
-void  nstr_assign_cstr(NString *str, const char *cstr);
-void  nstr_assign_block(NString *str, const void *block, int32_t len);
+void nstr_assign_mid(NString *str1, const NString *str2, uint32_t left, uint32_t len);
+void nstr_assign_cstr(NString *str, const char *cstr);
+void nstr_assign_block(NString *str, const void *block, int32_t len);
 
 // Convert back to c string
 char *nstr_to_cstr(const NString *str, char z);
-void  nstr_cstr_free(char *str);
+void nstr_cstr_free(char *str);
 
 // Destructor
-void  nstr_destroy(NString *str);
+void nstr_destroy(NString *str);
 
 // Plain Old Accessors
 int32_t nstr_len(const NString *str);
@@ -47,21 +47,21 @@ char *nstr_data(NString *str);
 char *nstr_data_offset(NString *str, int32_t offset);
 
 // Allocation mutators
-void  nstr_alloc(NString *str, int32_t len);
-void  nstr_alloc_min(NString *str, int32_t len);
+void nstr_alloc(NString *str, int32_t len);
+void nstr_alloc_min(NString *str, int32_t len);
 
 // Manipulation
-void  nstr_concat(NString *str1, const NString *str2);
-void  nstr_concat_char(NString *str, char c);
-void  nstr_concat_cstr(NString *str, const char *cstr);
-void  nstr_concat_block(NString *str, const void *block, int32_t len);
-void  nstr_insert(NString *str1, int32_t pos, const NString *str2, unsigned char fill);
-void  nstr_insert_block(NString *str, int32_t pos, const void *block, int32_t len, unsigned char fill);
-void  nstr_insert_char(NString *str, int32_t pos, int32_t len, unsigned char fill);
-void  nstr_replace(NString *str1, int32_t pos, int32_t len, const NString *str2, unsigned char fill);
-void  nstr_delete(NString *str, int32_t pos, int32_t len);
-void  nstr_set_str(NString *str1, int32_t pos, const NString *str2, unsigned char fill);
-void  nstr_truncate(NString *str, int32_t n);
+void nstr_concat(NString *str1, const NString *str2);
+void nstr_concat_char(NString *str, char c);
+void nstr_concat_cstr(NString *str, const char *cstr);
+void nstr_concat_block(NString *str, const void *block, int32_t len);
+void nstr_insert(NString *str1, int32_t pos, const NString *str2, unsigned char fill);
+void nstr_insert_block(NString *str, int32_t pos, const void *block, int32_t len, unsigned char fill);
+void nstr_insert_char(NString *str, int32_t pos, int32_t len, unsigned char fill);
+void nstr_replace(NString *str1, int32_t pos, int32_t len, const NString *str2, unsigned char fill);
+void nstr_delete(NString *str, int32_t pos, int32_t len);
+void nstr_set_str(NString *str1, int32_t pos, const NString *str2, unsigned char fill);
+void nstr_truncate(NString *str, int32_t n);
 
 // strcmp drop-in replacements
 int32_t nstr_cmp(const NString *str1, const NString *str2);
@@ -70,14 +70,14 @@ int32_t nstr_cmp_caseless(const NString *str1, const NString *str2);
 int32_t nstr_cmp_n_caseless(const NString *str1, const NString *str2, int32_t n);
 
 // String equality checks. Use instead of strcmp where possible
-void  nstr_is_eq(const NString *str1, const NString *str2);
-void  nstr_is_eq_caseless(const NString *str1, const NString *str2);
-void  nstr_is_eq_cstr(const NString *str, const char *cstr);
-void  nstr_is_eq_cstr_caseless(const NString *str, const char *cstr);
-void  nstr_is_eq_block(const NString *str, const void *block, int32_t len);
-void  nstr_is_eq_block_caseless(const NString *str, const void *block, int32_t len);
-void  nstr_is_stem_eq_block(const NString *str, const void *block, int32_t len);
-void  nstr_is_stem_eq_block_caseless(const NString *str, const void *block, int32_t len);
+boolean nstr_is_eq(const NString *str1, const NString *str2);
+boolean nstr_is_eq_caseless(const NString *str1, const NString *str2);
+boolean nstr_is_eq_cstr(const NString *str, const char *cstr);
+boolean nstr_is_eq_cstr_caseless(const NString *str, const char *cstr);
+boolean nstr_is_eq_block(const NString *str, const void *block, int32_t len);
+boolean nstr_is_eq_block_caseless(const NString *str, const void *block, int32_t len);
+boolean nstr_is_stem_eq_block(const NString *str, const void *block, int32_t len);
+boolean nstr_is_stem_eq_block_caseless(const NString *str, const void *block, int32_t len);
 
 // Substring queries
 int32_t nstr_in_str(const NString *str1, int32_t pos, const NString *str2);
@@ -95,11 +95,11 @@ int32_t nstr_find_replace_caseless(NString *str, const NString *find, const NStr
 
 // List functions
 NStringList *nstr_list_create(void);
-void  nstr_list_destroy(NStringList *sl);
-void  nstr_list_alloc(NStringList *sl, int min_size);
-void  nstr_list_alloc_qty(NStringList *sl, int min_qty);
+void nstr_list_destroy(NStringList *sl);
+void nstr_list_alloc(NStringList *sl, int min_size);
+void nstr_list_alloc_qty(NStringList *sl, int min_qty);
 NString *nstr_list_at(const NStringList *list, int32_t index);
-void  nstr_list_append(NStringList *list, NString *str);
+void nstr_list_append(NStringList *list, NString *str);
 
 // Tokenizer
 NStringList *nstr_split(const NString *str, unsigned char split);
@@ -107,26 +107,26 @@ NStringList *nstr_splits(const NString *str, const NString *splits);
 NStringList *nstr_split_string(const NString *str, const NString *split);
 NString *nstr_join(const NStringList *sl, const NString *separator);
 NString *nstr_join_block(const NStringList *sl, const void *block, int32_t len);
-void  nstr_split_callback(const NString *str, unsigned char split, int32_t pos,
+void nstr_split_callback(const NString *str, unsigned char split, int32_t pos,
   int32_t (*func_callback)(void *param, int32_t offset, int32_t len), void *param);
-void  nstr_splits_callback(const NString *str, const NString *splits, int32_t pos,
+void nstr_splits_callback(const NString *str, const NString *splits, int32_t pos,
   int32_t (*func_callback)(void *param, int32_t offset, int32_t len), void *param);
-void  nstr_split_string_callback(const NString *str, const NString *split, int32_t pos,
+void nstr_split_string_callback(const NString *str, const NString *split, int32_t pos,
   int32_t (*func_callback)(void *param, int32_t offset, int32_t len), void *param);
 
 // Format
-void  nstr_pattern(NString *str, int32_t len);
-void  nstr_to_upper(NString *str);
-void  nstr_to_lower(NString *str);
-void  nstr_trim_whitespace_left(NString *str);
-void  nstr_trim_whitespace_right(NString *str);
-void  nstr_trim_whitespace(NString *str);
+void nstr_pattern(NString *str, int32_t len);
+void nstr_to_upper(NString *str);
+void nstr_to_lower(NString *str);
+void nstr_trim_whitespace_left(NString *str);
+void nstr_trim_whitespace_right(NString *str);
+void nstr_trim_whitespace(NString *str);
 
 // sprintf drop-in replacements
 NString *nstr_format(const char *format, ...);
-void  nstr_format_append(NString *str, const char *format, ...);
-void  nstr_assign_format(NString *str, const char *format, ...);
-void  nstr_vaformat(NString *str, uint32_t count, const char *format, va_list va);
+void nstr_format_append(NString *str, const char *format, ...);
+void nstr_assign_format(NString *str, const char *format, ...);
+void nstr_vaformat(NString *str, uint32_t count, const char *format, va_list va);
 
 uint32_t nstr_to_uint(const NString *str);
 
