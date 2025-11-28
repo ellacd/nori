@@ -17,24 +17,18 @@ struct NList {
 
 NList *nlist_create(const char *typename, uint16 stride)
 {
-  NList *l = malloc(sizeof(*l));
-  l->qty = 0;
-  l->mlen = 4;
-  l->stride = stride;
-  l->data = malloc(stride * l->mlen);
-  snprintf(l->typename, 16, "%s", typename);
-  l->typename[15] = '\0';
-  return l;
+  return nlist_create_and_alloc(typename, stride, 8);
 }
 
 NList *nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen)
 {
   NList *l = malloc(sizeof(*l));
+
   l->qty = 0;
   l->mlen = mlen;
   l->stride = stride;
   l->data = malloc(stride * l->mlen);
-  snprintf(l->typename, 16, "%s", typename);
+  memcpy(l->typename, typename, 16);
   l->typename[15] = '\0';
   return l;
 }
@@ -66,60 +60,6 @@ uint32 nlist_len(const NList *l)
   return l->qty;
 }
 
-void *nlist_at(const NList *l, uint32 p)
-{
-  if (p >= l->qty) return NULL;
-  else return (l->data + p * l->stride);
-}
-
-void nlist_add(NList *l, const void *el)
-{
-  if (l->qty + 1 >= l->mlen) nlist_alloc(l, l->mlen * 2);
-  memcpy(&l->data[l->qty++ * l->stride], el, l->stride);
-}
-
-uint32 nlist_find(const NList *l, const void *el,
-                    boolean (*func_is_eq)(const void *e1, const void *e2))
-{
-  return nlist_find_from(l, el, func_is_eq, 0);
-}
-
-uint32 nlist_find_from(const NList *l, const void *el,
-                         boolean (*func_is_eq)(const void *e1, const void *e2), uint32 p)
-{
-  uint32 i;
-  uint32 len = nlist_len(l);
-
-  for (i = p; i < len; i++) {
-    const void *ei = nlist_at(l, i);
-    if (ei && func_is_eq(ei, el) == 0) {
-      return i;
-    }
-  }
-
-  return -1;
-}
-
-uint32 nlist_find_r(const NList *l, const void *el,
-                      boolean (*func_is_eq)(const void *e1, const void *e2))
-{
-  return nlist_find_r_from(l, el, func_is_eq, nlist_len(l) - 1);
-}
-
-uint32 nlist_find_r_from(const NList *l, const void *el,
-                           boolean (*func_is_eq)(const void *e1, const void *e2), uint32 p)
-{
-  uint32 i;
-
-  for (i = p; i >= 0; i--) {
-    const void *ei = nlist_at(l, i);
-    if (ei && func_is_eq(ei, el) == 0) {
-      return i;
-    }
-  }
-
-  return -1;
-}
 
 boolean nlist_can_cast(const NList *to, const NList *from)
 {
@@ -142,3 +82,28 @@ void nlist_append(NList *onto, const NList *from)
   onto->qty += from->qty;
 }
 
+void *nlist_at(const NList *l, uint32 p)
+{
+  if (p > l->qty - 1) return NULL;
+  else return (l->data + p * l->stride);
+}
+
+void nlist_insert(NList *l, uint32 p, const void *el)
+{
+  if (l->qty + 1 >= l->mlen) nlist_alloc(l, l->mlen * 2);  
+  memmove(&l->data[(p + 1) * l->stride],
+          &l->data[p * l->stride],
+          (l->qty - p) * l->stride);
+  memcpy(&l->data[p * l->stride], el, l->stride);
+}
+
+void nlist_push_back(NList *l, void *el)
+{
+  if (l->qty + 1 >= l->mlen) nlist_alloc(l, l->mlen * 2);
+  memcpy(&l->data[l->qty++ * l->stride], el, l->stride);
+}
+
+void *nlist_pop_back(NList *l)
+{
+  return &l->data[l->qty -= l->stride];
+}
