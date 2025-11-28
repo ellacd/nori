@@ -38,7 +38,8 @@ fclean: clean
 
 debug: CFLAGS += -g3 $(SANFLAGS)
 debug: LDFLAGS += $(SANFLAGS)
-debug: $(NAME)
+debug: $(OBJ)
+	$(CC) -o noritest $^ $(LDFLAGS) 
 
 release: CFLAGS += -O2 -DNDEBUG
 release: fclean $(NAME)
