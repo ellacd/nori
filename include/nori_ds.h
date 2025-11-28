@@ -9,6 +9,7 @@
 typedef void NList;
 #endif
 
+#define nlist(t) nlist_of_type(t)
 #define nlist_of_type(t) nlist_create((#t), sizeof(t));
 NList *	nlist_create(const char *typename, uint16 stride);
 NList *	nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen);
@@ -39,6 +40,8 @@ void *	nlist_pop_back(NList *l);
 /* Sorting functions.
  * Currently unimplemented.
  */
-void nlist_mergesort(NList *l);
+void nlist_mergesort(NList *l,
+                     int32 (*func_cmp)(const void *e1, const void *e2),
+                     void (*func_swap)(const void *e1, const void *e2));
 
 #endif
