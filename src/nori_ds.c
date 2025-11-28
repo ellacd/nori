@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,6 +23,7 @@ NList *nlist_create(const char *typename, uint16 stride)
 
 NList *nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen)
 {
+	uint32 typename_len;
 	NList *l = malloc(sizeof(*l));
 
 	l->qty = 0;
@@ -33,8 +35,9 @@ NList *nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen)
 	 * writing pointers; e.g. "char[]" and "char*" and "char *"
 	 * should really all map to the same place.
 	 */
-	memcpy(l->typename, typename, 16);
-	l->typename[15] = '\0';
+	typename_len = strlen(typename);
+	memcpy(l->typename, typename, 16 < typename_len ? 16 : typename_len);
+	l->typename[typename_len - 1] = '\0';
 	return l;
 }
 
@@ -115,7 +118,7 @@ void *nlist_pop_back(NList *l)
 
 void nlist_mergesort(NList *l,
                      int32 (*func_cmp)(const void *e1, const void *e2),
-                     void (*func_swap)(const void *e1, const void *e2))
+                     void (*func_swap)(void *e1, void *e2))
 {
 	NList *ptr_stack;
 	void *a, *b, *a_iter, *y_iter, *end;
@@ -147,4 +150,6 @@ void nlist_mergesort(NList *l,
 	odd = half % 2;
 	half = half / 2;
 	}
+
+	nlist_destroy(ptr_stack);
 }

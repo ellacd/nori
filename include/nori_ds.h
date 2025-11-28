@@ -42,6 +42,6 @@ void *	nlist_pop_back(NList *l);
  */
 void nlist_mergesort(NList *l,
                      int32 (*func_cmp)(const void *e1, const void *e2),
-                     void (*func_swap)(const void *e1, const void *e2));
+                     void (*func_swap)(void *e1, void *e2));
 
 #endif
