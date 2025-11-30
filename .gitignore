@@ -1,7 +1,7 @@
 *.[oda]
 .cache/
 .gdb_history
-NoriTest
+[Nn]ori[Tt]est
 compile_commands.json
 src/main.c
 include/raylib.h

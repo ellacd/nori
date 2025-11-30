@@ -1,7 +1,7 @@
 NAME := libnori.a
 
-CC := gcc
-CFLAGS := -std=c99 -Wall -Wpedantic -Wc90-c99-compat
+CC := clang
+CFLAGS := -std=c99 -W -Wall -Wpedantic -Wcomma -Wdeclaration-after-statement -Wdocumentation -Wdocumentation-pedantic -Wdouble-promotion -Wempty-translation-unit -Wflexible-array-extensions -Wfloat-conversion -Wfloat-equal -Wfor-loop-analysis -Wformat-non-iso -Wformat-pedantic -Wgcc-compat -Wimplicit -Winfinite-recursion -Wnewline-eof -Wpadded -Wpoison-system-directories -Wstring-concatenation -Wswitch-enum -Wunaligned-access -Wuninitialized -Wunique-object-duplication -Wunreachable-code-aggressive -Wunterminated-string-initialization -Wunused-label -Wvariadic-macros -Wvla
 CPPFLAGS = -MMD -MP -I $(INCLUDE_DIR)
 LDFLAGS = -lm -lbstr -L $(LIBRARY_DIR)
 AR := ar
@@ -36,7 +36,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-debug: CFLAGS += -g3 $(SANFLAGS)
+debug: CFLAGS += -g3 -Og $(SANFLAGS)
 debug: LDFLAGS += $(SANFLAGS)
 debug: $(OBJ)
 	$(CC) -o noritest $^ $(LDFLAGS) 
