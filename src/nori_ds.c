@@ -11,18 +11,18 @@ struct NList {
 	uint32 qty;
 	uint32 mlen;
 	uint16 stride;
-	char typename[14];
+	char name[14];
 	unsigned char *data;
 };
 
-NList *nlist_create(const char *typename, uint16 stride)
+NList *nlist_create(const char *name, uint16 stride)
 {
-	return nlist_create_and_alloc(typename, stride, 8);
+	return nlist_create_and_alloc(name, stride, 8);
 }
 
-NList *nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen)
+NList *nlist_create_and_alloc(const char *name, uint16 stride, uint32 mlen)
 {
-	uint32 typename_len;
+	uint32 name_len;
 	NList *l = malloc(sizeof(*l));
 
 	l->qty = 0;
@@ -34,9 +34,9 @@ NList *nlist_create_and_alloc(const char *typename, uint16 stride, uint32 mlen)
 	 * writing pointers; e.g. "char[]" and "char*" and "char *"
 	 * should really all map to the same place.
 	 */
-	typename_len = strlen(typename);
-	memcpy(l->typename, typename, 16 < typename_len ? 16 : typename_len);
-	l->typename[typename_len - 1] = '\0';
+	name_len = strlen(name);
+	memcpy(l->name, name, 16 < name_len ? 16 : name_len);
+	l->name[name_len - 1] = '\0';
 	return l;
 }
 
@@ -70,12 +70,12 @@ uint32 nlist_len(const NList *l)
 
 boolean nlist_can_cast(const NList *to, const NList *from)
 {
-	return strcmp(to->typename, from->typename) == 0;
+	return strcmp(to->name, from->name) == 0;
 }
 
 NList *nlist_copy(const NList *l)
 {
-	NList *l2 = nlist_create_and_alloc(l->typename, l->stride, l->mlen);
+	NList *l2 = nlist_create_and_alloc(l->name l->stride, l->mlen);
 	l2->qty = l->qty;
 	memcpy(l2->data, l->data, l->qty * l->stride);
 	return l2;
