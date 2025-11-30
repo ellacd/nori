@@ -1,11 +1,10 @@
-NAME := libnori.a
+NAME := libnori.so
+TEST := noritest
 
 CC := clang
-CFLAGS := -std=c99 -W -Wall -Wpedantic -Wno-comment -Wcomma -Wdeclaration-after-statement -Wdocumentation -Wdocumentation-pedantic -Wdouble-promotion -Wempty-translation-unit -Wflexible-array-extensions -Wfloat-conversion -Wfloat-equal -Wfor-loop-analysis -Wformat-non-iso -Wformat-pedantic -Wgcc-compat -Wimplicit -Winfinite-recursion -Wnewline-eof -Wpadded -Wpoison-system-directories -Wstring-concatenation -Wswitch-enum -Wunaligned-access -Wuninitialized -Wunreachable-code-aggressive -Wunused-label -Wvariadic-macros -Wvla
+CFLAGS := -fpic -std=c99 -W -Wall -Wpedantic -Wno-comment -Wcomma -Wdeclaration-after-statement -Wdocumentation -Wdocumentation-pedantic -Wdouble-promotion -Wempty-translation-unit -Wflexible-array-extensions -Wfloat-conversion -Wfloat-equal -Wfor-loop-analysis -Wformat-non-iso -Wformat-pedantic -Wgcc-compat -Wimplicit -Winfinite-recursion -Wnewline-eof -Wpadded -Wpoison-system-directories -Wstring-concatenation -Wswitch-enum -Wunaligned-access -Wuninitialized -Wunreachable-code-aggressive -Wunused-label -Wvariadic-macros -Wvla
 CPPFLAGS = -MMD -MP -I $(INCLUDE_DIR)
-LDFLAGS = -lm -lbstr -L $(LIBRARY_DIR)
-AR := ar
-ARFLAGS := -r -c -s 
+LDFLAGS = -shared -lm -lbstr -L $(LIBRARY_DIR)
 
 SANFLAGS := -fsanitize=address,undefined
 MAKEFLAGS := --no-print-directory
@@ -22,7 +21,7 @@ DEP = $(OBJ:%.o=%.d)
 all: debug
 
 $(NAME): $(OBJ)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
@@ -39,10 +38,13 @@ fclean: clean
 debug: CFLAGS += -g3 -Og $(SANFLAGS)
 debug: LDFLAGS += $(SANFLAGS)
 debug: $(OBJ)
-	$(CC) -o noritest $^ $(LDFLAGS) 
+	$(CC) -o $(TEST) $^ $(LDFLAGS) 
 
 release: CFLAGS += -O2 -DNDEBUG
 release: fclean $(NAME)
+
+install: $(NAME)
+	cp $(NAME) /usr/lib
 
 re:
 	$(MAKE) fclean
