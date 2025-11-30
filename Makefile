@@ -48,6 +48,7 @@ release: fclean $(LIBNAME)
 
 install: $(LIBNAME)
 	cp $(LIBNAME) /usr/lib
+	cp $(INCLUDE_DIR)/$(NAME).h /usr/include
 
 re:
 	$(MAKE) fclean
