@@ -3,6 +3,7 @@
 .gdb_history
 [Nn]ori[Tt]est
 nori
+*.so
 compile_commands.json
 src/main.c
 include/raylib.h
