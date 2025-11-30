@@ -3,7 +3,7 @@
 #ifndef NORI_DS_H
 #define NORI_DS_H
 
-#include "nori_def.h"
+#include "nori.h"
 
 #ifndef NORI_INTERNAL_H
 typedef void NList;

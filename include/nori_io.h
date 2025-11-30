@@ -1,7 +1,7 @@
 #ifndef NORI_IO_H
 #define NORI_IO_H
 
-#include "nori_def.h"
+#include "nori.h"
 #include "nori_str.h"
 #include <stddef.h>
 

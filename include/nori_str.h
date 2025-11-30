@@ -7,7 +7,7 @@
 #ifndef NORI_STR_H
 #define NORI_STR_H
 
-#include "nori_def.h"
+#include "nori.h"
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
