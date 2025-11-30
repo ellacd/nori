@@ -1,5 +1,8 @@
-NAME := libnori.so
-TEST := noritest
+# My somewhat-universal makefile for libraries.
+# LDFLAGS must of course be tailored to the individual project.
+NAME := nori
+
+LIBNAME := lib$(NAME).so
 
 CC := clang
 CFLAGS := -fPIC -std=c99 -W -Wall -Wpedantic -Wno-comment -Wcomma -Wdeclaration-after-statement -Wdocumentation -Wdocumentation-pedantic -Wdouble-promotion -Wempty-translation-unit -Wflexible-array-extensions -Wfloat-conversion -Wfloat-equal -Wfor-loop-analysis -Wformat-non-iso -Wformat-pedantic -Wgcc-compat -Wimplicit -Winfinite-recursion -Wnewline-eof -Wpadded -Wpoison-system-directories -Wstring-concatenation -Wswitch-enum -Wunaligned-access -Wuninitialized -Wunreachable-code-aggressive -Wunused-label -Wvariadic-macros -Wvla
@@ -20,8 +23,8 @@ DEP = $(OBJ:%.o=%.d)
 
 all: debug
 
-$(NAME): $(OBJ)
-	$(CC) $(LDFLAGS) -o $@ $^
+$(LIBNAME): $(OBJ)
+	$(CC) $(LDFLAGS) -o $(LIBNAME) $^
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(@D)
@@ -33,18 +36,18 @@ clean:
 	rm -f $(OBJ) $(DEP)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(LIBNAME) $(NAME)
 
 debug: CFLAGS += -g3 -Og $(SANFLAGS)
 debug: LDFLAGS += $(SANFLAGS)
 debug: $(OBJ)
-	$(CC) -o $(TEST) $^ $(LDFLAGS) 
+	$(CC) -o $(NAME) $^ $(LDFLAGS) 
 
 release: CFLAGS += -O2 -DNDEBUG
-release: fclean $(NAME)
+release: fclean $(LIBNAME)
 
-install: $(NAME)
-	cp $(NAME) /usr/lib
+install: $(LIBNAME)
+	cp $(LIBNAME) /usr/lib
 
 re:
 	$(MAKE) fclean

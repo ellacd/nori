@@ -2,6 +2,7 @@
 .cache/
 .gdb_history
 [Nn]ori[Tt]est
+nori
 compile_commands.json
 src/main.c
 include/raylib.h
