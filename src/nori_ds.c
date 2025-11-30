@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +11,7 @@ struct NList {
 	uint32 qty;
 	uint32 mlen;
 	uint16 stride;
-	char typename[16];
+	char typename[14];
 	unsigned char *data;
 };
 
