@@ -4,8 +4,8 @@
 
 typedef struct NList NList;
 
-#define NORI_INTERNAL_H
-#include "nori_ds.h"
+#define NORI_DS
+#include "nori.h"
 
 struct NList {
 	uint32 qty;
@@ -75,7 +75,7 @@ boolean nlist_can_cast(const NList *to, const NList *from)
 
 NList *nlist_copy(const NList *l)
 {
-	NList *l2 = nlist_create_and_alloc(l->name l->stride, l->mlen);
+	NList *l2 = nlist_create_and_alloc(l->name, l->stride, l->mlen);
 	l2->qty = l->qty;
 	memcpy(l2->data, l->data, l->qty * l->stride);
 	return l2;
