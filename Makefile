@@ -2,7 +2,7 @@ NAME := libnori.so
 TEST := noritest
 
 CC := clang
-CFLAGS := -fpic -std=c99 -W -Wall -Wpedantic -Wno-comment -Wcomma -Wdeclaration-after-statement -Wdocumentation -Wdocumentation-pedantic -Wdouble-promotion -Wempty-translation-unit -Wflexible-array-extensions -Wfloat-conversion -Wfloat-equal -Wfor-loop-analysis -Wformat-non-iso -Wformat-pedantic -Wgcc-compat -Wimplicit -Winfinite-recursion -Wnewline-eof -Wpadded -Wpoison-system-directories -Wstring-concatenation -Wswitch-enum -Wunaligned-access -Wuninitialized -Wunreachable-code-aggressive -Wunused-label -Wvariadic-macros -Wvla
+CFLAGS := -fPIC -std=c99 -W -Wall -Wpedantic -Wno-comment -Wcomma -Wdeclaration-after-statement -Wdocumentation -Wdocumentation-pedantic -Wdouble-promotion -Wempty-translation-unit -Wflexible-array-extensions -Wfloat-conversion -Wfloat-equal -Wfor-loop-analysis -Wformat-non-iso -Wformat-pedantic -Wgcc-compat -Wimplicit -Winfinite-recursion -Wnewline-eof -Wpadded -Wpoison-system-directories -Wstring-concatenation -Wswitch-enum -Wunaligned-access -Wuninitialized -Wunreachable-code-aggressive -Wunused-label -Wvariadic-macros -Wvla
 CPPFLAGS = -MMD -MP -I $(INCLUDE_DIR)
 LDFLAGS = -shared -lm -lbstr -L $(LIBRARY_DIR)
 
